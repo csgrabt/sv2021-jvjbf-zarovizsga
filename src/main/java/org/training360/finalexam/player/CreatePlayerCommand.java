@@ -15,4 +15,13 @@ public class CreatePlayerCommand {
     private String name;
     private LocalDate birthDate;
     private PositionType position;
+
+    public CreatePlayerCommand(String name) {
+        this.name = name;
+    }
+
+    public CreatePlayerCommand(String name, LocalDate birthDate) {
+        this.name = name;
+        this.birthDate = birthDate;
+    }
 }

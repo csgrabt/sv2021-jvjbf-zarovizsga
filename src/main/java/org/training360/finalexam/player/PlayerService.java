@@ -29,4 +29,10 @@ public class PlayerService {
                 .map(n -> modelMapper.map(n, PlayerDTO.class))
                 .toList();
     }
+
+    public void deletePlayerById(Long id) {
+        repository.delete(repository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Cannot delete Player based on id: " + id))
+        );
+    }
 }

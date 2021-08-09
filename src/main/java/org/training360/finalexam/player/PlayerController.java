@@ -18,7 +18,6 @@ public class PlayerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-
     public PlayerDTO createEmployee(@Valid @RequestBody CreatePlayerCommand command) {
         return playerService.createPlayer(command);
     }
@@ -29,5 +28,9 @@ public class PlayerController {
         return playerService.listPlayers();
     }
 
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteElder(@PathVariable("id") Long id) {
+        playerService.deletePlayerById(id);
+    }
 }

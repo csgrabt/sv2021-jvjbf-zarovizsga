@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.training360.finalexam.player.Player;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,9 @@ public class Team {
     }
 
     public void addTeamToPlayer(Player player) {
+        if (players == null) {
+            players = new ArrayList<>();
+        }
         this.players.add(player);
         player.setTeam(this);
     }

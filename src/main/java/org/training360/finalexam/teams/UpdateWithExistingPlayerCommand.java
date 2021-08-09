@@ -1,17 +1,18 @@
 package org.training360.finalexam.teams;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 
 public class UpdateWithExistingPlayerCommand {
-    private long playerId;
+    private Long id;
 
 
-    public UpdateWithExistingPlayerCommand(long playerId) {
-        this.playerId = playerId;
-
+    public UpdateWithExistingPlayerCommand(Long id) {
+        this.id = id;
     }
-
 }
+
+

@@ -2,12 +2,20 @@ package org.training360.finalexam.teams;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.training360.finalexam.player.CreatePlayerCommand;
 import org.training360.finalexam.player.Player;
 import org.training360.finalexam.player.PlayerRepository;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
+import java.net.URI;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
@@ -50,13 +58,13 @@ public class TeamService {
     }
 
     @Transactional
-    public TeamDTO addPlayerWithOutTeam(Long id, UpdateWithExistingPlayerCommand command) {
-        Player player = playerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find player by id"));
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA" + player.getTeam());
+    public TeamDTO addExistingPlayerToExistingTeam(Long id, UpdateWithExistingPlayerCommand command) {
+        Player player = playerRepository.findById(command.getId()).orElseThrow();
+        Team team = repository.findById(id).orElseThrow();
         if (player.getTeam() != null) {
-            throw new IllegalArgumentException("The player has team");
+            return modelMapper.map(team, TeamDTO.class);
         }
-        Team team = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find team by id"));
+
 
         int counter = 0;
 
@@ -66,11 +74,13 @@ public class TeamService {
                 counter++;
             }
         }
-        if (counter > 2) {
-            throw new IllegalArgumentException("Too many player int this position");
+        if (counter >= 2) {
+            return modelMapper.map(team, TeamDTO.class);
         }
+
         team.addTeamToPlayer(player);
 
         return modelMapper.map(team, TeamDTO.class);
     }
+
 }

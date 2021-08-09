@@ -96,7 +96,7 @@ public class TeamControllerRestIT {
                         new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
-        template.put("/api/teams/{id}/players", new UpdateWithExistingPlayerCommand(player.getId()), team.getId());
+        template.put("/api/teams/" + team.getId() + "/players", new UpdateWithExistingPlayerCommand(player.getId()));
 
 
         List<TeamDTO> result = template.exchange(
@@ -113,7 +113,7 @@ public class TeamControllerRestIT {
 
 
     @Test
-    void testAddExistingPlayerWithTeam(){
+    void testAddExistingPlayerWithTeam() {
         TeamDTO team1 =
                 template.postForObject("/api/teams",
                         new CreateTeamCommand("Arsenal"),
@@ -126,7 +126,7 @@ public class TeamControllerRestIT {
 
         PlayerDTO player =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                        new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
         template.put("/api/teams/{id}/players", new UpdateWithExistingPlayerCommand(player.getId()), team1.getId());
@@ -141,8 +141,8 @@ public class TeamControllerRestIT {
                 }
         ).getBody();
 
-        TeamDTO resultTeam1 = result.stream().filter(t->t.getName().equals("Arsenal")).findFirst().orElseThrow();
-        TeamDTO resultTeam2 = result.stream().filter(t->t.getName().equals("Chelsea")).findFirst().orElseThrow();
+        TeamDTO resultTeam1 = result.stream().filter(t -> t.getName().equals("Arsenal")).findFirst().orElseThrow();
+        TeamDTO resultTeam2 = result.stream().filter(t -> t.getName().equals("Chelsea")).findFirst().orElseThrow();
 
         assertThat(resultTeam1.getPlayers()).extracting(PlayerDTO::getName)
                 .containsExactly("John Doe");
@@ -152,7 +152,7 @@ public class TeamControllerRestIT {
     }
 
     @Test
-    void testAddPlayerWithPosition(){
+    void testAddPlayerWithPosition() {
         TeamDTO team1 =
                 template.postForObject("/api/teams",
                         new CreateTeamCommand("Arsenal"),
@@ -160,17 +160,17 @@ public class TeamControllerRestIT {
 
         PlayerDTO player =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                        new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
         PlayerDTO player2 =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("Jack Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                        new CreatePlayerCommand("Jack Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
         PlayerDTO player3 =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("Jill Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                        new CreatePlayerCommand("Jill Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
         template.put("/api/teams/{id}/players", new UpdateWithExistingPlayerCommand(player.getId()), team1.getId());
@@ -186,29 +186,29 @@ public class TeamControllerRestIT {
         ).getBody();
 
         assertThat(result.get(0).getPlayers()).extracting(PlayerDTO::getName)
-                .containsOnly("John Doe","Jack Doe");
+                .containsOnly("John Doe", "Jack Doe");
 
     }
 
     @Test
-    void testAddPlayerToNotExistingTeam(){
+    void testAddPlayerToNotExistingTeam() {
         Long wrongId = 6666L;
 
-        Problem result = template.postForObject("/api/teams/"+wrongId+"/players",
-                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+        Problem result = template.postForObject("/api/teams/" + wrongId + "/players",
+                new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                 Problem.class);
 
-        assertEquals(URI.create("teams/not-found"),result.getType());
-        assertEquals(Status.NOT_FOUND,result.getStatus());
+        assertEquals(URI.create("teams/not-found"), result.getType());
+        assertEquals(Status.NOT_FOUND, result.getStatus());
     }
 
     @Test
-    void testCreateTeamWithInvalidName(){
+    void testCreateTeamWithInvalidName() {
         Problem result =
                 template.postForObject("/api/teams",
                         new CreateTeamCommand(""),
                         Problem.class);
 
-        assertEquals(Status.BAD_REQUEST,result.getStatus());
+        assertEquals(Status.BAD_REQUEST, result.getStatus());
     }
 }

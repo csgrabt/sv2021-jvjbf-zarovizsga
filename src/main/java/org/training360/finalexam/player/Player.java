@@ -15,9 +15,15 @@ import java.time.LocalDate;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Double id;
+    private Long id;
     private String name;
     private LocalDate birthDate;
+    @Enumerated(EnumType.STRING)
     private Position position;
 
+    public Player(String name, LocalDate birthDate, Position position) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.position = position;
+    }
 }

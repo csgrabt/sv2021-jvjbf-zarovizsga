@@ -1,9 +1,9 @@
 package org.training360.finalexam.player;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.training360.finalexam.teams.Team;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -20,6 +20,10 @@ public class Player {
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)
     private PositionType position;
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Team team;
 
     public Player(String name, LocalDate birthDate, PositionType position) {
         this.name = name;

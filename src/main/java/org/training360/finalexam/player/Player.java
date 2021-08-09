@@ -19,9 +19,9 @@ public class Player {
     private String name;
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)
-    private Position position;
+    private PositionType position;
 
-    public Player(String name, LocalDate birthDate, Position position) {
+    public Player(String name, LocalDate birthDate, PositionType position) {
         this.name = name;
         this.birthDate = birthDate;
         this.position = position;

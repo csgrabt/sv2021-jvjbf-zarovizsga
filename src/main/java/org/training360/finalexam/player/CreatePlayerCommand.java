@@ -14,5 +14,5 @@ public class CreatePlayerCommand {
     @NotBlank
     private String name;
     private LocalDate birthDate;
-    private Position position;
+    private PositionType position;
 }

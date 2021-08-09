@@ -13,6 +13,6 @@ public class PlayerDTO {
     private Long id;
     private String name;
     private LocalDate birthDate;
-    private Position position;
+    private PositionType position;
 
 }

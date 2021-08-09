@@ -34,10 +34,8 @@ public class TeamController {
     }
 
     @PutMapping("/api/teams/{id}/players")
-    @ResponseStatus(HttpStatus.CREATED)
-
     public TeamDTO createFinance(@PathVariable("id") long id, @RequestBody  UpdateWithExistingPlayerCommand command) {
-        return teamService.createFinance(id, command);
+        return teamService.addPlayerWithOutTeam(id, command);
     }
 
 }

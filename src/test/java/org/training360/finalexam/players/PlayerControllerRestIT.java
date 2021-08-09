@@ -1,4 +1,4 @@
-/*package org.training360.finalexam.players;
+package org.training360.finalexam.players;
 
 
 import org.junit.jupiter.api.Test;
@@ -98,4 +98,3 @@ public class PlayerControllerRestIT {
 
 
 }
-*/

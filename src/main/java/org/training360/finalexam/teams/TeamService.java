@@ -49,10 +49,12 @@ public class TeamService {
         return modelMapper.map(team, TeamDTO.class);
     }
 
-    public TeamDTO createFinance(Long id, UpdateWithExistingPlayerCommand command) {
+    @Transactional
+    public TeamDTO addPlayerWithOutTeam(Long id, UpdateWithExistingPlayerCommand command) {
         Player player = playerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find player by id"));
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA" + player.getTeam());
         if (player.getTeam() != null) {
-            throw new IllegalArgumentException("The plpayer Has team");
+            throw new IllegalArgumentException("The player has team");
         }
         Team team = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cannot find team by id"));
 

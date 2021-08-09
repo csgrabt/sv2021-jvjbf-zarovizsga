@@ -24,7 +24,7 @@ public class PlayerController {
 
     @GetMapping
 
-    public List<PlayerDTO> listElders() {
+    public List<PlayerDTO> listPlayers() {
         return playerService.listPlayers();
     }
 

@@ -8,7 +8,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
-import org.training360.finalexam.teams.CreateTeamCommand;
+import org.training360.finalexam.player.CreatePlayerCommand;
+import org.training360.finalexam.player.PlayerDTO;
+import org.training360.finalexam.player.PositionType;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {"delete from players"})
@@ -26,26 +29,26 @@ public class PlayerControllerRestIT {
 
 
     @Test
-    void testAddNewPlayers(){
+    void testAddNewPlayers() {
         PlayerDTO result =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
-                                PlayerDTO.class);
+                        new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
+                        PlayerDTO.class);
 
 
-        assertEquals("John Doe",result.getName());
-        assertEquals(1991,result.getBirthDate().getYear());
-        assertEquals(PositionType.CENTER_BACK,result.getPosition());
+        assertEquals("John Doe", result.getName());
+        assertEquals(1991, result.getBirthDate().getYear());
+        assertEquals(PositionType.CENTER_BACK, result.getPosition());
     }
 
     @Test
-    void testGetPlayers(){
+    void testGetPlayers() {
         template.postForObject("/api/players",
-                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                 PlayerDTO.class);
 
         template.postForObject("/api/players",
-                new CreatePlayerCommand("Jack Doe", LocalDate.of(1992,11,10),PositionType.RIGHT_WINGER),
+                new CreatePlayerCommand("Jack Doe", LocalDate.of(1992, 11, 10), PositionType.RIGHT_WINGER),
                 PlayerDTO.class);
 
         List<PlayerDTO> result = template.exchange(
@@ -58,13 +61,13 @@ public class PlayerControllerRestIT {
 
 
         assertThat(result).extracting(PlayerDTO::getName)
-                .containsExactly("John Doe","Jack Doe");
+                .containsExactly("John Doe", "Jack Doe");
     }
 
     @Test
-    void deletePlayerById(){
-        PlayerDTO result =template.postForObject("/api/players",
-                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+    void deletePlayerById() {
+        PlayerDTO result = template.postForObject("/api/players",
+                new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                 PlayerDTO.class);
 
 
@@ -84,16 +87,15 @@ public class PlayerControllerRestIT {
     }
 
     @Test
-    void testCreatePlayerWithInvalidName(){
+    void testCreatePlayerWithInvalidName() {
         Problem result =
                 template.postForObject("/api/players",
-                        new CreateTeamCommand(""),
+                        new CreatePlayerCommand(""),
                         Problem.class);
 
-        assertEquals(Status.BAD_REQUEST,result.getStatus());
+        assertEquals(Status.BAD_REQUEST, result.getStatus());
     }
 
 
-
-
-}*/
+}
+*/

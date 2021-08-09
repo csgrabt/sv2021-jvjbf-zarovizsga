@@ -30,4 +30,10 @@ public class Team {
         this.id = id;
         this.name = name;
     }
+
+    public void addTeamToPlayer(Player player) {
+        this.players.add(player);
+        player.setTeam(this);
+    }
+
 }

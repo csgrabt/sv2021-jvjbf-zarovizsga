@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("/api/players")
 @RestController
@@ -22,7 +23,11 @@ public class PlayerController {
         return playerService.createPlayer(command);
     }
 
+    @GetMapping
 
+    public List<PlayerDTO> listElders() {
+        return playerService.listPlayers();
+    }
 
 
 }

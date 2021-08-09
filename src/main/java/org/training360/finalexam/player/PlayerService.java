@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PlayerService {
@@ -18,5 +20,13 @@ public class PlayerService {
                 command.getPosition());
         repository.save(player);
         return modelMapper.map(player, PlayerDTO.class);
+    }
+
+    public List<PlayerDTO> listPlayers() {
+        return repository
+                .findAll()
+                .stream()
+                .map(n -> modelMapper.map(n, PlayerDTO.class))
+                .toList();
     }
 }

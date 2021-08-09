@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.training360.finalexam.player.CreatePlayerCommand;
 import org.training360.finalexam.player.PlayerDTO;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/api/teams")
@@ -30,6 +31,13 @@ public class TeamController {
     @ResponseStatus(HttpStatus.CREATED)
     public TeamDTO addPlayer(@PathVariable("id") long id, @RequestBody CreatePlayerCommand command) {
         return teamService.addPlayerToTeam(id, command);
+    }
+
+    @PutMapping("/api/teams/{id}/players")
+    @ResponseStatus(HttpStatus.CREATED)
+
+    public TeamDTO createFinance(@PathVariable("id") long id, @RequestBody  UpdateWithExistingPlayerCommand command) {
+        return teamService.createFinance(id, command);
     }
 
 }

@@ -3,7 +3,8 @@ package org.training360.finalexam.teams;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.training360.finalexam.player.Player;
+import org.training360.finalexam.player.PlayerDTO;
+
 import java.util.List;
 
 @Data
@@ -12,5 +13,5 @@ import java.util.List;
 public class TeamDTO {
     private Long id;
     private String name;
-    private List<Player> players;
+    private List<PlayerDTO> players;
 }

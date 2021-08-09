@@ -13,6 +13,7 @@ import org.training360.finalexam.player.PositionType;
 import org.training360.finalexam.teams.CreateTeamCommand;
 import org.training360.finalexam.teams.TeamDTO;
 //import org.training360.finalexam.teams.UpdateWithExistingPlayerCommand;
+import org.training360.finalexam.teams.UpdateWithExistingPlayerCommand;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@Sql(statements = {"delete from players", "delete from teams"})
+@Sql(statements = {"delete from players", "delete from teams"})
 public class TeamControllerRestIT {
 
     @Autowired
@@ -64,10 +65,9 @@ public class TeamControllerRestIT {
         assertThat(result).extracting(TeamDTO::getName)
                 .containsExactly("Arsenal", "Chelsea");
     }
-}
 
 
-/*    @Test
+    @Test
     void testAddNewPlayerToExistingTeam() {
         TeamDTO team =
                 template.postForObject("/api/teams",
@@ -83,9 +83,9 @@ public class TeamControllerRestIT {
                 .containsExactly("John Doe");
 
     }
-}
- /*   @Test
-    void testAddExistingPlayerToExistingTeam(){
+
+    @Test
+    void testAddExistingPlayerToExistingTeam() {
         TeamDTO team =
                 template.postForObject("/api/teams",
                         new CreateTeamCommand("Arsenal"),
@@ -93,7 +93,7 @@ public class TeamControllerRestIT {
 
         PlayerDTO player =
                 template.postForObject("/api/players",
-                        new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10), PositionType.CENTER_BACK),
+                        new CreatePlayerCommand("John Doe", LocalDate.of(1991, 11, 10), PositionType.CENTER_BACK),
                         PlayerDTO.class);
 
         template.put("/api/teams/{id}/players", new UpdateWithExistingPlayerCommand(player.getId()), team.getId());
@@ -112,7 +112,7 @@ public class TeamControllerRestIT {
     }
 
 
-/*    @Test
+    @Test
     void testAddExistingPlayerWithTeam(){
         TeamDTO team1 =
                 template.postForObject("/api/teams",
@@ -211,4 +211,4 @@ public class TeamControllerRestIT {
 
         assertEquals(Status.BAD_REQUEST,result.getStatus());
     }
-}*/
+}

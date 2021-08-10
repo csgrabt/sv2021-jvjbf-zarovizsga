@@ -40,7 +40,7 @@ public class TeamController {
 
 
     @PutMapping("/{id}/players")
-    public TeamDTO addExistingPlayerToExistingTeam(@PathVariable("id") Long id, @RequestBody UpdateWithExistingPlayerCommand command) {
+    public TeamDTO addExistingPlayerToExistingTeam(@PathVariable("id") Long id, @Valid @RequestBody UpdateWithExistingPlayerCommand command) {
         return teamService.addExistingPlayerToExistingTeam(id, command);
     }
 

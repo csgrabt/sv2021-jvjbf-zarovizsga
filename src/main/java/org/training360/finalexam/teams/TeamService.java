@@ -59,7 +59,7 @@ public class TeamService {
 
     @Transactional
     public TeamDTO addExistingPlayerToExistingTeam(Long id, UpdateWithExistingPlayerCommand command) {
-        Player player = playerRepository.findById(command.getId()).orElseThrow();
+        Player player = playerRepository.findById(command.getPlayerId()).orElseThrow();
         Team team = repository.findById(id).orElseThrow();
         if (player.getTeam() != null) {
             return modelMapper.map(team, TeamDTO.class);
